@@ -35,10 +35,10 @@
 [include]
   path = ~/.gitconfig.local
 [filter "lfs"]
+	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-	required = true
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
@@ -48,3 +48,5 @@
 [user]
 	name = Ryan Crispin Heneise
 	email = ryan@mysmallidea.com
+[log]
+	decorate = full

@@ -44,18 +44,6 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile *.md set filetype=markdown
   autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
-
-  " ALE linting events
-  if g:has_async
-    set updatetime=1000
-    let g:ale_lint_on_text_changed = 0
-    autocmd CursorHold * call ale#Lint()
-    autocmd CursorHoldI * call ale#Lint()
-    autocmd InsertEnter * call ale#Lint()
-    autocmd InsertLeave * call ale#Lint()
-  else
-    echoerr "The thoughtbot dotfiles require NeoVim or Vim 8"
-  endif
 augroup END
 
 " When the type of shell script is /bin/sh, assume a POSIX-compatible
@@ -115,9 +103,9 @@ inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <S-Tab> <c-n>
 
 " Switch between the last two files
-nnoremap <Leader><Leader> <c-^>
+nnoremap <leader><leader> <c-^>
 
-" Get off my lawn
+" Reminder to use hjkl
 nnoremap <Left> :echoe "Use h"<CR>
 nnoremap <Right> :echoe "Use l"<CR>
 nnoremap <Up> :echoe "Use k"<CR>
@@ -128,7 +116,7 @@ nnoremap <silent> <Leader>t :TestFile<CR>
 nnoremap <silent> <Leader>s :TestNearest<CR>
 nnoremap <silent> <Leader>l :TestLast<CR>
 nnoremap <silent> <Leader>a :TestSuite<CR>
-nnoremap <silent> <Leader>gt :TestVisit<CR>
+nnoremap <silent> <leader>gt :TestVisit<CR>
 
 " Run commands that require an interactive shell
 nnoremap <Leader>r :RunInInteractiveShell<space>
@@ -146,10 +134,45 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" Move between linting errors
-nnoremap ]r :ALENextWrap<CR>
-nnoremap [r :ALEPreviousWrap<CR>
+" configure syntastic syntax checking to check on open as well as save
+let g:syntastic_check_on_open=1
+let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_eruby_ruby_quiet_messages =
+    \ {"regex": "possibly useless use of a variable in void context"}
 
+execute pathogen#infect()
+
+syntax enable
+set background=dark
+colorscheme onedark
+
+let g:enable_bold_font = 1
+
+set guifont=Iosevka\ Nerd\ Font:h16
+
+set path=$PWD/**
+
+" Show just the filename
+" https://github.com/bling/vim-airline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline_powerline_fonts = 1
+let g:airline_theme = "violet"
+let g:airline#extensions#syntastic#enabled = 0
+
+
+:au FocusLost * silent! wa
+
+" http://stackoverflow.com/questions/2968548/vim-return-to-command-mode-when-focus-is-lost
+:au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
+
+" This allows buffers to be hidden if you've modified a buffer.
+" This is almost a must if you wish to use buffers in this way.
+set hidden
+
+" Do not wrap lines automatically
+set textwidth=0
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
@@ -159,6 +182,88 @@ set complete+=kspell
 
 " Always use vertical diffs
 set diffopt+=vertical
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T :enew<cr>
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bd :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap <leader>bl :ls<CR>
+
+" Go to alternate file
+nmap <leader>a :A<CR>
+" Go to related file
+nmap <leader>r :R<CR>
+" Go to file
+nmap <leader>g gf<CR>
+" Close buffer
+nmap <leader>q :q<CR>
+
+nmap <leader>w :w<CR>
+nmap <leader>s :split<CR>
+nmap <leader>v :vsplit<CR>
+
+" Quick buffer navigation with Command key
+map <D-[> :bprevious<CR>
+map <D-]> :bnext<CR>
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Close the buffer in the current split without closing the split
+nnoremap <C-w> :bp\|bd #<CR>
+
+nnoremap <C-[> <C-w>h
+nnoremap <C-]> <C-w>l
+
+" Bubble single lines
+nmap <C-Up> ddkP
+nmap <C-Down> ddp
+" Bubble Multiple Lines
+
+nnoremap ` :NERDTreeToggle<CR>
+map <leader>r :NERDTreeFind<cr>
+
+" http://stackoverflow.com/questions/21017857/ctrlp-still-searches-the-ignored-directory
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/public/packs*
+if exists("g:ctrlp_user_command")
+  unlet g:ctrlp_user_command
+endif
+
+" https://github.com/thiagoalessio/rainbow_levels.vim
+" Creating a mapping to turn it on and off:
+map <leader>l :RainbowLevelsToggle<cr>
+" Automatically turning it on for certain file types:
+" au FileType xml,yaml,yml :RainbowLevelsOn
+let g:rainbow_levels = [
+    \{'ctermfg': 2, 'guifg': '#a6e22e'},
+    \{'ctermfg': 6, 'guifg': '#66d9ef'},
+    \{'ctermfg': 4, 'guifg': '#ae81ff'},
+    \{'ctermfg': 5, 'guifg': '#f92672'},
+    \{'ctermfg': 1, 'guifg': '#fd971f'},
+    \{'ctermfg': 3, 'guifg': '#f4bf75'},
+    \{'ctermfg': 7, 'guifg': '#f8f8f2'},
+    \{'ctermfg': 0, 'guifg': '#75715e'}]
+
+set cursorline
+set cursorcolumn
+set relativenumber
+
+" get rid of scrollbars in MacVim
+set guioptions=
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
