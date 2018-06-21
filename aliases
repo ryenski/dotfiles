@@ -5,6 +5,11 @@ alias mkdir="mkdir -p"
 alias e="$EDITOR"
 alias v="$VISUAL"
 
+# Git
+alias gs="git status"
+alias gc="git commit -v"
+alias ga="git add ."
+
 # Bundler
 alias b="bundle"
 
