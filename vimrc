@@ -137,6 +137,7 @@ nnoremap <C-l> <C-w>l
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1
 let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
+let g:syntastic_quiet_messages = { "type": "style" }
 let g:syntastic_eruby_ruby_quiet_messages =
     \ {"regex": "possibly useless use of a variable in void context"}
 
@@ -157,10 +158,20 @@ set path=$PWD/**
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#syntastic#enabled = 0
 let g:airline_powerline_fonts = 1
 let g:airline_theme = "violet"
-let g:airline#extensions#syntastic#enabled = 0
 
+" Asynchronous Lint Engine
+let g:ale_sign_column_always = 1
+let g:airline#extensions#ale#enabled = 1
+
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\   'ruby': ['rubocop'],
+\}
+let g:ale_enabled = 1
+let g:ale_fix_on_save = 1
 
 :au FocusLost * silent! wa
 
@@ -171,8 +182,11 @@ let g:airline#extensions#syntastic#enabled = 0
 " This is almost a must if you wish to use buffers in this way.
 set hidden
 
-" Do not wrap lines automatically
-set textwidth=0
+" Wrap lines automatically
+set textwidth=120
+set wrap
+set linebreak
+
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
 set spellfile=$HOME/.vim-spell-en.utf-8.add
@@ -238,7 +252,7 @@ nnoremap ` :NERDTreeToggle<CR>
 map <leader>r :NERDTreeFind<cr>
 
 " http://stackoverflow.com/questions/21017857/ctrlp-still-searches-the-ignored-directory
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/public/packs*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/public/packs*,*/doc/*,*/docs/*
 if exists("g:ctrlp_user_command")
   unlet g:ctrlp_user_command
 endif
@@ -264,6 +278,11 @@ set relativenumber
 
 " get rid of scrollbars in MacVim
 set guioptions=
+
+" vim-devicons
+" https://github.com/ryanoasis/vim-devicons
+" ctrlp glyphs
+let g:webdevicons_enable_ctrlp = 0
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
