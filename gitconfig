@@ -1,17 +1,17 @@
 [init]
-  templatedir = ~/.git_template
+	templatedir = ~/.git_template
 [push]
-  default = current
+	default = current
 [color]
-  ui = auto
+	ui = auto
 [alias]
-  aa = add --all
-  ap = add --patch
+	aa = add --all
+	ap = add --patch
 	branches = !legit branches
-  ci = commit -v
-  co = checkout
-  pf = push --force-with-lease
-  st = status
+	ci = commit -v
+	co = checkout
+	pf = push --force-with-lease
+	st = status
 	graft = !legit graft
 	harvest = !legit harvest
 	publish = !legit publish
@@ -22,23 +22,24 @@
 	resync = !legit resync
 [core]
 	excludesfile = /Users/ryenski/.gitignore
-  autocrlf = input
+	autocrlf = input
 	editor = mvim -f
 [merge]
-  ff = only
+	ff = only
 [commit]
 	template = ~/.gitmessage
+	gpgsign = true
 [fetch]
-  prune = true
+	prune = true
 [rebase]
-  autosquash = true
+	autosquash = true
 [include]
-  path = ~/.gitconfig.local
+	path = ~/.gitconfig.local
 [filter "lfs"]
+	process = git-lfs filter-process
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 

@@ -71,12 +71,18 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
 
   " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+  " let g:ctrlp_use_caching = 0
 
   if !exists(":Ag")
     command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
     nnoremap \ :Ag<SPACE>
   endif
+endif
+
+" http://stackoverflow.com/questions/21017857/ctrlp-still-searches-the-ignored-directory
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/public/packs*,*/doc/*,*/docs/*,*/storage/*
+if exists("g:ctrlp_user_command")
+  unlet g:ctrlp_user_command
 endif
 
 " Make it obvious where 80 characters is
@@ -144,12 +150,8 @@ let g:syntastic_eruby_ruby_quiet_messages =
 execute pathogen#infect()
 
 syntax enable
-set background=dark
-colorscheme onedark
 
 let g:enable_bold_font = 1
-
-set guifont=Iosevka\ Nerd\ Font:h16
 
 set path=$PWD/**
 
@@ -165,13 +167,17 @@ let g:airline_theme = "violet"
 " Asynchronous Lint Engine
 let g:ale_sign_column_always = 1
 let g:airline#extensions#ale#enabled = 1
-
+let g:ale_linters = { 'scss': ['scsslint'] }
 let g:ale_fixers = {
-\   'javascript': ['prettier'],
+\   'javascript': ['prettier', 'eslint'],
 \   'ruby': ['rubocop'],
-\}
+\   'slim': ['stylelint'],
+\   'erb' : ['erb', 'tidy'],
+\   'html': ['tidy']
+\ }
 let g:ale_enabled = 1
 let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
 
 :au FocusLost * silent! wa
 
@@ -251,12 +257,6 @@ nmap <C-Down> ddp
 nnoremap ` :NERDTreeToggle<CR>
 map <leader>r :NERDTreeFind<cr>
 
-" http://stackoverflow.com/questions/21017857/ctrlp-still-searches-the-ignored-directory
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/public/packs*,*/doc/*,*/docs/*
-if exists("g:ctrlp_user_command")
-  unlet g:ctrlp_user_command
-endif
-
 " https://github.com/thiagoalessio/rainbow_levels.vim
 " Creating a mapping to turn it on and off:
 map <leader>l :RainbowLevelsToggle<cr>
@@ -275,14 +275,6 @@ let g:rainbow_levels = [
 set cursorline
 set cursorcolumn
 set relativenumber
-
-" get rid of scrollbars in MacVim
-set guioptions=
-
-" vim-devicons
-" https://github.com/ryanoasis/vim-devicons
-" ctrlp glyphs
-let g:webdevicons_enable_ctrlp = 0
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")

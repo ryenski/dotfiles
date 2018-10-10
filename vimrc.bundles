@@ -37,27 +37,41 @@ let g:has_async = v:version >= 800 || has('nvim')
 call plug#begin('~/.vim/bundle')
 
 " Define bundles via Github repos
+
+" Run Interactive is a Vim plugin for selectively running commands via an interactive shell.
 " Plug 'christoomey/vim-run-interactive'
+" Elixir language support
 " Plug 'elixir-lang/vim-elixir'
+" Go language support for Vim
 " Plug 'fatih/vim-go'
-" Plug 'janko-m/vim-test'
-" Plug 'kchmck/vim-coffee-script'
+" A Vim wrapper for running tests on different granularities.
+Plug 'janko-m/vim-test'
+" Run bundler from within Vim
 Plug 'tpope/vim-bundler'
+" Insert end structures automatically
 Plug 'tpope/vim-endwise'
+" Vim sugar for UNIX shell commands
 Plug 'tpope/vim-eunuch'
+" Git wrapper for Vim
 Plug 'tpope/vim-fugitive'
+" Github 
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-rhubarb'
+" surround
 Plug 'tpope/vim-surround'
+" ruby
 Plug 'vim-ruby/vim-ruby'
+" A set of mappings for HTML, XML, PHP, ASP, eRuby, JSP, and more
+Plug 'tpope/vim-ragtag'
 
-" Color schemes
-Plug 'dracula/vim'
-Plug 'ayu-theme/ayu-vim'
+" One Dark color scheme
 Plug 'joshdick/onedark.vim'
+
+" Preview colours in source code while editing http://www.vim.org/scripts/script.php…
+Plug 'ap/vim-css-color'
 
 if g:has_async
   " Asynchronous Lint Engine
@@ -71,18 +85,22 @@ Plug 'pbrisbin/vim-mkdir'
 Plug 'slim-template/vim-slim'
 Plug 'jasoncodes/ctrlp-modified.vim'  " Easily open locally modified files in your git-versioned projects.
 Plug 'scrooloose/nerdtree'
-" Plug 'Xuyuanp/nerdtree-git-plugin'    " Git status in nerd tree
+Plug 'Xuyuanp/nerdtree-git-plugin'    " Git status in nerd tree
 Plug 'tpope/vim-sensible'             " sensible.vim: Defaults everyone can agree on http://www.vim.org/scripts/script.php?script_id=4391
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-scripts/gitignore'          " Set 'wildignore' from ./.gitignore
 Plug 'dkarter/bullets.vim'            " 🔫 Bullets.vim is a Vim plugin for automated bullet lists. https://doriankarter.com
 Plug 'godlygeek/tabular'
-" Plug 'ryanoasis/vim-devicons'
-" Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'thiagoalessio/rainbow_levels.vim'
 Plug 'Townk/vim-autoclose'
 Plug 'posva/vim-vue'
+
+" Highlight regex matches
+Plug 'markonm/traces.vim'
+
+" Use the silver searcher
+Plug 'rking/ag.vim'
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local
