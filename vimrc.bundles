@@ -66,6 +66,8 @@ Plug 'tpope/vim-surround'
 Plug 'vim-ruby/vim-ruby'
 " A set of mappings for HTML, XML, PHP, ASP, eRuby, JSP, and more
 Plug 'tpope/vim-ragtag'
+" Vim Cucumber
+Plug 'tpope/vim-cucumber'
 
 " One Dark color scheme
 Plug 'joshdick/onedark.vim'

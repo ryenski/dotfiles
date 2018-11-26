@@ -167,11 +167,15 @@ let g:airline_theme = "violet"
 " Asynchronous Lint Engine
 let g:ale_sign_column_always = 1
 let g:airline#extensions#ale#enabled = 1
-let g:ale_linters = { 'scss': ['scsslint'] }
+let g:ale_linters = {
+\   'css': ['stylelint'],
+\   'slim': ['stylelint'],
+\ }
 let g:ale_fixers = {
 \   'javascript': ['prettier', 'eslint'],
 \   'ruby': ['rubocop'],
-\   'slim': ['stylelint'],
+\   'css':  ['stylelint', 'prettier'],
+\   'scss': ['stylelint'],
 \   'erb' : ['erb', 'tidy'],
 \   'html': ['tidy']
 \ }
@@ -257,20 +261,6 @@ nmap <C-Down> ddp
 nnoremap ` :NERDTreeToggle<CR>
 map <leader>r :NERDTreeFind<cr>
 
-" https://github.com/thiagoalessio/rainbow_levels.vim
-" Creating a mapping to turn it on and off:
-map <leader>l :RainbowLevelsToggle<cr>
-" Automatically turning it on for certain file types:
-" au FileType xml,yaml,yml :RainbowLevelsOn
-let g:rainbow_levels = [
-    \{'ctermfg': 2, 'guifg': '#a6e22e'},
-    \{'ctermfg': 6, 'guifg': '#66d9ef'},
-    \{'ctermfg': 4, 'guifg': '#ae81ff'},
-    \{'ctermfg': 5, 'guifg': '#f92672'},
-    \{'ctermfg': 1, 'guifg': '#fd971f'},
-    \{'ctermfg': 3, 'guifg': '#f4bf75'},
-    \{'ctermfg': 7, 'guifg': '#f8f8f2'},
-    \{'ctermfg': 0, 'guifg': '#75715e'}]
 
 set cursorline
 set cursorcolumn
