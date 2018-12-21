@@ -87,6 +87,7 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 [[ -f ~/.zshrc.aliases ]] && source ~/.zshrc.aliases
+[[ -f ~/.aliases ]] && source ~/.aliases
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
