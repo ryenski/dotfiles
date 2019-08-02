@@ -1,0 +1,89 @@
+" Switch between the last two files
+nnoremap <Leader><Leader> <C-^>
+
+" Reminder to use hjkl
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
+
+" vim-test mappings
+nnoremap <silent> <Leader>t :TestFile<CR>
+nnoremap <silent> <Leader>s :TestNearest<CR>
+nnoremap <silent> <Leader>l :TestLast<CR>
+nnoremap <silent> <Leader>a :TestSuite<CR>
+nnoremap <silent> <leader>gt :TestVisit<CR>
+
+" Run commands that require an interactive shell
+nnoremap <Leader>r :RunInInteractiveShell<Space>
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Move between linting errors
+nnoremap ]r :ALENextWrap<CR>
+nnoremap [r :ALEPreviousWrap<CR>
+
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T :enew<cr>
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bd :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap <leader>bl :ls<CR>
+
+" Go to alternate file
+nmap <leader>a :A<CR>
+" Go to related file
+nmap <leader>r :R<CR>
+" Go to file
+nmap <leader>g gf<CR>
+" Close buffer
+nmap <leader>q :q<CR>
+
+nmap <leader>w :w<CR>
+nmap <leader>s :split<CR>
+nmap <leader>v :vsplit<CR>
+
+" Quick buffer navigation with Command key
+map <D-[> :bprevious<CR>
+map <D-]> :bnext<CR>
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Close the buffer in the current split without closing the split
+nnoremap <C-w> :bp\|bd #<CR>
+
+nnoremap <C-[> <C-w>h
+nnoremap <C-]> <C-w>l
+
+" Bubble single lines
+nmap <C-Up> ddkP
+nmap <C-Down> ddp
+" Bubble Multiple Lines
+
+nnoremap ` :NERDTreeToggle<CR>
+map <leader>r :NERDTreeFind<cr>
+
+
+
