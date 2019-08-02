@@ -13,3 +13,4 @@ tmp/**/*
 *.pyc
 .scratch.rb
 .zshrc
+.node_modules
