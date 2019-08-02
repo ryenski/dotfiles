@@ -33,21 +33,14 @@
 	prune = true
 [rebase]
 	autosquash = true
-[include]
-	path = ~/.gitconfig.local
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
-[diff]
-    tool = default-difftool
-[difftool "default-difftool"]
-    cmd = code --wait --diff $LOCAL $REMOTE
-[mergetool "vscode"]
-    cmd = code --wait $MERGED
-[user]
-	name = Ryan Crispin Heneise
-	email = ryan@boosterstage.net
 [log]
 	decorate = full
+[include]
+	path = ~/.gitconfig.local
+[diff]
+	colorMoved = zebra

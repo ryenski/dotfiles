@@ -1,3 +1,5 @@
+set encoding=utf-8
+
 " Leader
 let mapleader = " "
 
@@ -41,9 +43,29 @@ augroup vimrcEx
     \ endif
 
   " Set syntax highlighting for specific file types
-  autocmd BufRead,BufNewFile Appraisals set filetype=ruby
   autocmd BufRead,BufNewFile *.md set filetype=markdown
   autocmd BufRead,BufNewFile .{jscs,jshint,eslint}rc set filetype=json
+  autocmd BufRead,BufNewFile aliases.local,zshrc.local,*/zsh/configs/* set filetype=sh
+  autocmd BufRead,BufNewFile gitconfig.local set filetype=gitconfig
+  autocmd BufRead,BufNewFile tmux.conf.local set filetype=tmux
+  autocmd BufRead,BufNewFile vimrc.local set filetype=vim
+augroup END
+
+" ALE linting events
+augroup ale
+  autocmd!
+
+  if g:has_async
+    autocmd VimEnter *
+      \ set updatetime=1000 |
+      \ let g:ale_lint_on_text_changed = 0
+    autocmd CursorHold * call ale#Queue(0)
+    autocmd CursorHoldI * call ale#Queue(0)
+    autocmd InsertEnter * call ale#Queue(0)
+    autocmd InsertLeave * call ale#Queue(0)
+  else
+    echoerr "The thoughtbot dotfiles require NeoVim or Vim 8"
+  endif
 augroup END
 
 " When the type of shell script is /bin/sh, assume a POSIX-compatible
@@ -68,21 +90,15 @@ if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor
 
   " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
+  let g:ctrlp_user_command = 'ag --literal --files-with-matches --nocolor --hidden -g "" %s'
 
   " ag is fast enough that CtrlP doesn't need to cache
-  " let g:ctrlp_use_caching = 0
+  let g:ctrlp_use_caching = 0
 
   if !exists(":Ag")
     command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
     nnoremap \ :Ag<SPACE>
   endif
-endif
-
-" http://stackoverflow.com/questions/21017857/ctrlp-still-searches-the-ignored-directory
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/node_modules/*,*/public/packs*,*/doc/*,*/docs/*,*/storage/*
-if exists("g:ctrlp_user_command")
-  unlet g:ctrlp_user_command
 endif
 
 " Make it obvious where 80 characters is
@@ -100,16 +116,16 @@ set wildmode=list:longest,list:full
 function! InsertTabWrapper()
     let col = col('.') - 1
     if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
+        return "\<Tab>"
     else
-        return "\<c-p>"
+        return "\<C-p>"
     endif
 endfunction
-inoremap <Tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <S-Tab> <c-n>
+inoremap <Tab> <C-r>=InsertTabWrapper()<CR>
+inoremap <S-Tab> <C-n>
 
 " Switch between the last two files
-nnoremap <leader><leader> <c-^>
+nnoremap <Leader><Leader> <C-^>
 
 " Reminder to use hjkl
 nnoremap <Left> :echoe "Use h"<CR>
@@ -125,7 +141,7 @@ nnoremap <silent> <Leader>a :TestSuite<CR>
 nnoremap <silent> <leader>gt :TestVisit<CR>
 
 " Run commands that require an interactive shell
-nnoremap <Leader>r :RunInInteractiveShell<space>
+nnoremap <Leader>r :RunInInteractiveShell<Space>
 
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
@@ -140,62 +156,9 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
-" configure syntastic syntax checking to check on open as well as save
-let g:syntastic_check_on_open=1
-let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]
-let g:syntastic_quiet_messages = { "type": "style" }
-let g:syntastic_eruby_ruby_quiet_messages =
-    \ {"regex": "possibly useless use of a variable in void context"}
-
-execute pathogen#infect()
-
-syntax enable
-
-let g:enable_bold_font = 1
-
-set path=$PWD/**
-
-" Show just the filename
-" https://github.com/bling/vim-airline
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#bufferline#enabled = 1
-let g:airline#extensions#syntastic#enabled = 0
-let g:airline_powerline_fonts = 1
-let g:airline_theme = "violet"
-
-" Asynchronous Lint Engine
-let g:ale_sign_column_always = 1
-let g:airline#extensions#ale#enabled = 1
-let g:ale_linters = {
-\   'css': ['stylelint'],
-\   'slim': ['stylelint'],
-\ }
-let g:ale_fixers = {
-\   'javascript': ['prettier', 'eslint'],
-\   'ruby': ['rubocop'],
-\   'css':  ['stylelint', 'prettier'],
-\   'scss': ['stylelint'],
-\   'erb' : ['erb', 'tidy'],
-\   'html': ['tidy']
-\ }
-let g:ale_enabled = 1
-let g:ale_fix_on_save = 1
-let g:ale_completion_enabled = 1
-
-:au FocusLost * silent! wa
-
-" http://stackoverflow.com/questions/2968548/vim-return-to-command-mode-when-focus-is-lost
-:au FocusLost,TabLeave * call feedkeys("\<C-\>\<C-n>")
-
-" This allows buffers to be hidden if you've modified a buffer.
-" This is almost a must if you wish to use buffers in this way.
-set hidden
-
-" Wrap lines automatically
-set textwidth=120
-set wrap
-set linebreak
+" Move between linting errors
+nnoremap ]r :ALENextWrap<CR>
+nnoremap [r :ALEPreviousWrap<CR>
 
 " Set spellfile to location that is guaranteed to exist, can be symlinked to
 " Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
@@ -206,65 +169,6 @@ set complete+=kspell
 
 " Always use vertical diffs
 set diffopt+=vertical
-
-" To open a new empty buffer
-" This replaces :tabnew which I used to bind to this mapping
-nmap <leader>T :enew<cr>
-
-" Move to the next buffer
-nmap <leader>l :bnext<CR>
-
-" Move to the previous buffer
-nmap <leader>h :bprevious<CR>
-
-" Close the current buffer and move to the previous one
-" This replicates the idea of closing a tab
-nmap <leader>bd :bp <BAR> bd #<CR>
-
-" Show all open buffers and their status
-nmap <leader>bl :ls<CR>
-
-" Go to alternate file
-nmap <leader>a :A<CR>
-" Go to related file
-nmap <leader>r :R<CR>
-" Go to file
-nmap <leader>g gf<CR>
-" Close buffer
-nmap <leader>q :q<CR>
-
-nmap <leader>w :w<CR>
-nmap <leader>s :split<CR>
-nmap <leader>v :vsplit<CR>
-
-" Quick buffer navigation with Command key
-map <D-[> :bprevious<CR>
-map <D-]> :bnext<CR>
-
-" Quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
-
-" Close the buffer in the current split without closing the split
-nnoremap <C-w> :bp\|bd #<CR>
-
-nnoremap <C-[> <C-w>h
-nnoremap <C-]> <C-w>l
-
-" Bubble single lines
-nmap <C-Up> ddkP
-nmap <C-Down> ddp
-" Bubble Multiple Lines
-
-nnoremap ` :NERDTreeToggle<CR>
-map <leader>r :NERDTreeFind<cr>
-
-
-set cursorline
-set cursorcolumn
-set relativenumber
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")

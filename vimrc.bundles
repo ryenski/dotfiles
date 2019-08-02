@@ -10,99 +10,35 @@ function! s:UnPlug(plug_name)
 endfunction
 command!  -nargs=1 UnPlug call s:UnPlug(<args>)
 
-" Shim command and function to allow migration from Vundle to vim-plug.
-function! VundleToPlug(vundle_command, arg, ...)
-  echom "You are using Vundle's `".a:vundle_command."` command to declare plugins. Dotfiles now uses vim-plug for plugin management. Please rename uses of `".a:vundle_command."` to `Plug`. Plugin was '".a:arg."'."
-  let vim_plug_options = {}
-
-  if a:0 > 0
-    if has_key(a:1, 'name')
-      let name = a:1.name
-      let vim_plug_options.dir = "$HOME/.vim/bundle/".a:1.name
-    endif
-
-    if has_key(a:1, 'rtp')
-      let vim_plug_options.rtp = a:1.rtp
-    endif
-  endif
-
-  Plug a:arg, vim_plug_options
-endfunction
-
-com! -nargs=+  -bar Plugin call VundleToPlug("Plugin", <args>)
-com! -nargs=+  -bar Bundle call VundleToPlug("Bundle", <args>)
-
 let g:has_async = v:version >= 800 || has('nvim')
 
 call plug#begin('~/.vim/bundle')
 
 " Define bundles via Github repos
-
-" Run Interactive is a Vim plugin for selectively running commands via an interactive shell.
-" Plug 'christoomey/vim-run-interactive'
-" Elixir language support
-" Plug 'elixir-lang/vim-elixir'
-" Go language support for Vim
-" Plug 'fatih/vim-go'
-" A Vim wrapper for running tests on different granularities.
+Plug 'christoomey/vim-run-interactive'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'elixir-lang/vim-elixir'
+Plug 'fatih/vim-go'
 Plug 'janko-m/vim-test'
-" Run bundler from within Vim
+Plug 'pangloss/vim-javascript'
+Plug 'pbrisbin/vim-mkdir'
+Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-bundler'
-" Insert end structures automatically
 Plug 'tpope/vim-endwise'
-" Vim sugar for UNIX shell commands
 Plug 'tpope/vim-eunuch'
-" Git wrapper for Vim
 Plug 'tpope/vim-fugitive'
-" Github 
-Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-projectionist'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-rake'
 Plug 'tpope/vim-repeat'
-" surround
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
-" ruby
 Plug 'vim-ruby/vim-ruby'
-" A set of mappings for HTML, XML, PHP, ASP, eRuby, JSP, and more
-Plug 'tpope/vim-ragtag'
-" Vim Cucumber
-Plug 'tpope/vim-cucumber'
-
-" One Dark color scheme
-Plug 'joshdick/onedark.vim'
-
-" Preview colours in source code while editing http://www.vim.org/scripts/script.php…
-Plug 'ap/vim-css-color'
+Plug 'vim-scripts/tComment'
 
 if g:has_async
-  " Asynchronous Lint Engine
   Plug 'w0rp/ale'
 endif
-
-Plug 'vim-scripts/tComment'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'pangloss/vim-javascript'
-Plug 'pbrisbin/vim-mkdir'
-Plug 'slim-template/vim-slim'
-Plug 'jasoncodes/ctrlp-modified.vim'  " Easily open locally modified files in your git-versioned projects.
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'    " Git status in nerd tree
-Plug 'tpope/vim-sensible'             " sensible.vim: Defaults everyone can agree on http://www.vim.org/scripts/script.php?script_id=4391
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-scripts/gitignore'          " Set 'wildignore' from ./.gitignore
-Plug 'dkarter/bullets.vim'            " 🔫 Bullets.vim is a Vim plugin for automated bullet lists. https://doriankarter.com
-Plug 'godlygeek/tabular'
-Plug 'thiagoalessio/rainbow_levels.vim'
-Plug 'Townk/vim-autoclose'
-Plug 'posva/vim-vue'
-
-" Highlight regex matches
-Plug 'markonm/traces.vim'
-
-" Use the silver searcher
-Plug 'rking/ag.vim'
 
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local
