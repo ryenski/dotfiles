@@ -223,7 +223,8 @@ let g:rainbow_levels = [
 iabbrev </ </<C-X><C-O>
 imap <C-Space> <C-X><C-O>
 
-
+" Auto-save files when vim loses focus
+autocmd FocusLost * silent! wall
 
 " configure syntastic syntax checking to check on open as well as save
 let g:syntastic_check_on_open=1

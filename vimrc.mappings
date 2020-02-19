@@ -86,4 +86,9 @@ nnoremap ` :NERDTreeToggle<CR>
 map <leader>r :NERDTreeFind<cr>
 
 
+" Easily open locally modified files in your git-versioned projects.
+" https://github.com/jasoncodes/ctrlp-modified.vim
+map <Leader>m :CtrlPModified<CR>
+map <Leader>b :CtrlPBranch<CR>
+map <Leader>B :CtrlPBranchModified<CR>
 

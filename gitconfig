@@ -21,7 +21,7 @@
 	switch = !legit switch
 	resync = !legit resync
 [core]
-	excludesfile = /Users/ryenski/.gitignore
+	excludesfile = /Users/ryenski/dotfiles/gitignore
 	autocrlf = input
 	editor = mvim -f
 [merge]
@@ -40,7 +40,8 @@
 	required = true
 [log]
 	decorate = full
-[include]
-	path = ~/.gitconfig.local
 [diff]
 	colorMoved = zebra
+[user]
+	name = Ryan Crispin Heneise
+	email = ryan@boosterstage.net
