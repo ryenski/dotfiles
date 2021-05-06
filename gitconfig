@@ -45,3 +45,11 @@
 [user]
 	name = Ryan Crispin Heneise
 	email = ryan@boosterstage.net
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[gui]
+	recentrepo = /Users/ryenski/Projects/dime-giving
