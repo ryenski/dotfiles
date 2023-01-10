@@ -21,3 +21,4 @@ tmp/**/*
 .scratch.rb
 .zshrc
 .node_modules
+worktree
