@@ -23,7 +23,8 @@
 [core]
 	excludesfile = /Users/ryenski/dotfiles/gitignore
 	autocrlf = input
-	editor = mvim -f
+	editor = code --wait
+	pager = less -F -X
 [merge]
 	ff = only
 [commit]
@@ -42,14 +43,20 @@
 	decorate = full
 [diff]
 	colorMoved = zebra
+	tool = default-difftool
 [user]
 	name = Ryan Crispin Heneise
 	email = ryan@boosterstage.net
+	signingkey = A3AEA05620B857B0!
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
 	path = 
+[difftool "default-difftool"]
+	cmd = code --wait --diff $LOCAL $REMOTE
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
 [gui]
 	recentrepo = /Users/ryenski/Projects/dime-giving
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
