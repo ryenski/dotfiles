@@ -54,7 +54,7 @@ set hidden
 
 " Wrap lines automatically
 set textwidth=120
-set wrap
+set nowrap
 set linebreak
 
 " Switch syntax highlighting on, when the terminal has colors
@@ -115,7 +115,7 @@ let g:ale_linters = {
 \   'slim': ['stylelint'],
 \ }
 let g:ale_fixers = {
-\   'javascript': ['prettier', 'eslint'],
+\   'javascript': ['eslint', 'prettier'],
 \   'ruby': ['rubocop'],
 \   'css':  ['stylelint', 'prettier'],
 \   'scss': ['stylelint'],
@@ -139,7 +139,7 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag --literal --files-with-matches --nocolor --hidden -g "" %s'
 
   " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+  let g:ctrlp_use_caching = 1
 
   if !exists(":Ag")
     command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
@@ -251,7 +251,44 @@ if filereadable($HOME . "/.vimrc.mappings")
   source ~/.vimrc.mappings
 endif
 
+"""" enable 24bit true color
+" If you have vim >=8.0 or Neovim >= 0.1.5
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+" Slideshow mode
+autocmd BufNewFile,BufRead *.vpm call SetVimPresentationMode()
+function SetVimPresentationMode()
+  nnoremap <buffer> <Right> :n<CR>
+  nnoremap <buffer> <Left> :N<CR>
+
+  if !exists('#goyo')
+    Goyo
+  endif
+endfunction
+
+" All sane developers use a dark background.
+set background=dark
+colorscheme shades_of_purple
+
+let g:shades_of_purple_airline = 1
+let g:airline_theme='violet'
+
+set guifont=Iosevka\ Light\ Nerd\ Font\ Complete:h18
+" set guifont=Iosevka\ Extralight\ Nerd\ Font\ Complete:h18
+" set guifont=Iosevka\ Nerd\ Font\ Complete:h15
+
+" Open NERDTree on the right
+let g:NERDTreeWinPos="right"
+
+let g:ale_completion_enabled = 0
+
 " Local config
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
 endif
+
+" Per-directory .vimrc files
+set exrc
+set secure
