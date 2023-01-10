@@ -49,6 +49,10 @@ alias gdb='git branch --merged | grep -i -v -E "master|production" | xargs git b
 # Git log find by commit message
 function glf() { git log --all --grep="$1"; }
 
+# Node
+alias yt='yarn test'
+alias ytw='yarn test --watch'
+
 # Bundler
 alias b="bundle"
 
