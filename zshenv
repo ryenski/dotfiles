@@ -27,3 +27,4 @@ MSG
 fi
 
 unset _old_path
+export PATH="/Users/ryenski/.ebcli-virtual-env/executables:$PATH"
