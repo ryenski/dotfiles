@@ -18,7 +18,7 @@ call plug#begin('~/.vim/bundle')
 " Plug 'elixir-lang/vim-elixir'
 " Plug 'fatih/vim-go'
 " Plug 'janko-m/vim-test'
-Plug 'joshdick/onedark.vim'
+" Plug 'joshdick/onedark.vim'
 " Plug 'pbrisbin/vim-mkdir'
 " Plug 'posva/vim-vue'                    " Vue syntax
 " Plug 'tpope/vim-bundler'
@@ -56,16 +56,17 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'vim-scripts/gitignore'            " Set 'wildignore' from ./.gitignore
 " Plug 'vim-scripts/tComment'
 Plug 'Xuyuanp/nerdtree-git-plugin'      " Git status in nerd tree
-Plug 'nathangrigg/vim-beancount'
+" Plug 'nathangrigg/vim-beancount'
 
-Plug 'dracula/vim'
+" Plug 'dracula/vim'
 " Plug 'Rigellute/shades-of-purple.vim'
 Plug 'emsilva/shades-of-purple.vim'
-Plug 'carakan/new-railscasts-theme'
-Plug 'junegunn/goyo.vim'
+" Plug 'carakan/new-railscasts-theme'
+" Plug 'junegunn/goyo.vim'
+Plug 'github/copilot.vim'
 
 if g:has_async
-  Plug 'w0rp/ale'
+  Plug 'dense-analysis/ale'
 endif
 if filereadable(expand("~/.vimrc.bundles.local"))
   source ~/.vimrc.bundles.local
