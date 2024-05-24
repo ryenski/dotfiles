@@ -275,9 +275,6 @@ colorscheme shades_of_purple
 let g:shades_of_purple_airline = 1
 let g:airline_theme='violet'
 
-set guifont=Iosevka\ Light\ Nerd\ Font\ Complete:h18
-" set guifont=Iosevka\ Extralight\ Nerd\ Font\ Complete:h18
-" set guifont=Iosevka\ Nerd\ Font\ Complete:h15
 
 " Open NERDTree on the right
 let g:NERDTreeWinPos="right"
