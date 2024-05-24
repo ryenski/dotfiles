@@ -43,4 +43,5 @@
 [diff]
 	colorMoved = zebra
 	tool = default-difftool
-
+[include]
+  path = ~/.gitconfig.local
