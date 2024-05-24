@@ -26,6 +26,7 @@ alias gcod='git checkout develop'
 alias gd='git diff'
 alias gda='git diff HEAD'
 alias gi='git init'
+alias glo='git log --oneline --decorate'
 alias glg='git log --graph --oneline --decorate'
 alias gld='git log --pretty=format:"%h %ad %s" --date=short --all'
 alias gm='git merge --no-ff'
@@ -58,8 +59,12 @@ alias ytw='yarn test --watch'
 # Bundler
 alias b="bundle"
 
+# Rails
+alias t="tail -f log/development.log"
+
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
 # Include custom aliases
 [[ -f ~/.aliases.local ]] && source ~/.aliases.local
+
