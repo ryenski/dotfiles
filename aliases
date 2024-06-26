@@ -47,6 +47,8 @@ alias gstp='git stash pop'
 alias gsts='git stash save'
 alias gmf='git merge --no-ff --no-edit'
 alias gbdm='git branch --merged | grep -i -v -E "master|production" | xargs git branch -d'
+alias gdf='git diff --name-only --cached'
+alias gnvim='gdf | xargs nvim'
 
 # ----------------------
 # Git Functions
