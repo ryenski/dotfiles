@@ -80,14 +80,24 @@
     background: var(--mantle);
     border-bottom: 1px solid var(--surface0);
   }
-  section.sessions h2 { color: var(--blue); }
-  section.windows h2  { color: var(--green); }
-  section.panes h2    { color: var(--magenta); }
-  section.copy h2     { color: var(--yellow); }
-  section.grab h2     { color: var(--teal); }
-  section.misc h2     { color: var(--peach); }
-  section.plugins h2  { color: var(--pink); }
-  section.gotchas h2  { color: var(--red); }
+  section.sessions h2   { color: var(--blue); }
+  section.windows h2    { color: var(--green); }
+  section.panes h2      { color: var(--magenta); }
+  section.copy h2       { color: var(--yellow); }
+  section.grab h2       { color: var(--teal); }
+  section.misc h2       { color: var(--peach); }
+  section.gotchas h2    { color: var(--red); }
+  section.tpm h2        { color: var(--pink); }
+  section.sensible h2   { color: var(--subtext); }
+  section.yank h2       { color: var(--yellow); }
+  section.resurrect h2  { color: var(--green); }
+  section.continuum h2  { color: var(--teal); }
+  section.thumbs h2     { color: var(--peach); }
+  section.fzf h2        { color: var(--blue); }
+  section.fzf-url h2    { color: var(--teal); }
+  section.catppuccin h2 { color: var(--magenta); }
+  section.sessionx h2   { color: var(--blue); }
+  section.floax h2      { color: var(--pink); }
   table { width: 100%; border-collapse: collapse; }
   td {
     padding: 0.45rem 1rem;
@@ -129,6 +139,26 @@
     font-size: 0.8rem;
   }
   footer code { color: var(--subtext); }
+  .grid-divider {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0.5rem 0;
+  }
+  .grid-divider hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid var(--surface1);
+  }
+  .grid-divider h2 {
+    margin: 0;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--overlay);
+    white-space: nowrap;
+  }
   @media print {
     body { background: #fff; color: #000; }
   }
@@ -217,23 +247,111 @@
   </table>
 </section>
 
-<section class="plugins">
-  <h2>Plugins (TPM)</h2>
+<div class="grid-divider">
+  <hr>
+  <h2>Plugins</h2>
+  <hr>
+</div>
+
+<section class="tpm">
+  <h2>TPM — Plugin Manager</h2>
   <table>
-    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>I</kbd> / <kbd>U</kbd></td><td class="action">Install / update plugins</td></tr>
-    <tr><td class="keys">sensible · yank</td><td class="action">Sane defaults · clipboard yank</td></tr>
-    <tr><td class="keys">resurrect · continuum</td><td class="action">Save / auto-restore sessions (nvim strategy)</td></tr>
-    <tr><td class="keys">thumbs · fzf · fzf-url</td><td class="action">Hint copy · fuzzy menus · URL opener</td></tr>
-    <tr><td class="keys">catppuccin</td><td class="action">Theme — status at <strong>top</strong>: session left, directory right</td></tr>
-    <tr><td class="keys">sessionx · floax</td><td class="action">Session manager (<kbd>o</kbd>) · floating pane (<kbd>p</kbd>)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>I</kbd></td><td class="action">Install all plugins listed in <code>tmux.conf</code></td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>U</kbd></td><td class="action">Update all installed plugins</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>alt+u</kbd></td><td class="action">Remove plugins no longer in conf</td></tr>
   </table>
+  <div class="note">Plugins live in <code>~/.config/tmux/plugins/</code>. Run <kbd>I</kbd> after adding a new <code>set -g @plugin</code> line.</div>
+</section>
+
+<section class="sensible">
+  <h2>tmux-sensible</h2>
+  <div class="note"><span class="tag">auto</span> Applied silently at startup — no key bindings. Sets sane defaults: UTF-8, 50k history, focus events, faster key repeat, <code>$SHELL</code> as default command, and ensures <kbd>⌃`</kbd> sends the right escape.</div>
+</section>
+
+<section class="yank">
+  <h2>tmux-yank</h2>
+  <table>
+    <tr><td class="keys"><kbd>y</kbd> <span class="tag">copy mode</span></td><td class="action">Yank selection to system clipboard and stay in copy mode</td></tr>
+    <tr><td class="keys"><kbd>Y</kbd> <span class="tag">copy mode</span></td><td class="action">Yank current line to system clipboard</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>y</kbd></td><td class="action">Yank current pane's command to clipboard</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Y</kbd></td><td class="action">Yank current pane's working directory to clipboard</td></tr>
+  </table>
+  <div class="note"><code>set-clipboard on</code> — uses the system clipboard via <code>xclip</code> / <code>xsel</code> / <code>wl-copy</code> on Linux.</div>
+</section>
+
+<section class="resurrect">
+  <h2>tmux-resurrect</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+s</kbd></td><td class="action">Save all sessions, windows, panes &amp; layouts to disk</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+r</kbd></td><td class="action">Restore last saved environment</td></tr>
+  </table>
+  <div class="note"><strong>nvim strategy</strong> — neovim sessions are restored via <code>Session.vim</code> (requires vim-obsession or similar). Saves to <code>~/.local/share/tmux/resurrect/</code>.</div>
+</section>
+
+<section class="continuum">
+  <h2>tmux-continuum</h2>
+  <div class="note"><span class="tag">auto</span> Saves the environment automatically every <strong>15 minutes</strong> using tmux-resurrect under the hood.</div>
+  <div class="note"><code>@continuum-restore on</code> — the last saved environment is restored automatically when tmux server starts. No key binding needed.</div>
+</section>
+
+<section class="thumbs">
+  <h2>tmux-thumbs</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Space</kbd></td><td class="action">Enter thumbs mode — overlays letter hints on all on-screen text tokens</td></tr>
+    <tr><td class="keys"><kbd>a</kbd>–<kbd>z</kbd> <span class="tag">thumbs mode</span></td><td class="action">Press the hint letter to copy that token to the clipboard</td></tr>
+    <tr><td class="keys"><kbd>shift</kbd>+hint <span class="tag">thumbs mode</span></td><td class="action">Copy token and paste it directly into the current pane</td></tr>
+  </table>
+  <div class="note">Great for grabbing hashes, IPs, file paths, and UUIDs without reaching for the mouse.</div>
+</section>
+
+<section class="fzf">
+  <h2>tmux-fzf</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>F</kbd></td><td class="action">Open the tmux-fzf menu</td></tr>
+  </table>
+  <div class="note">Menu entries: <strong>Session</strong> — switch/new/rename/kill · <strong>Window</strong> — switch/new/rename/close · <strong>Pane</strong> — switch/swap/kill · <strong>Command</strong> — run any tmux command · <strong>Key binding</strong> — browse and trigger bindings.</div>
+</section>
+
+<section class="fzf-url">
+  <h2>tmux-fzf-url</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>u</kbd></td><td class="action">Fuzzy-pick a URL from scrollback and open it in the browser</td></tr>
+  </table>
+  <div class="note">Searches the last <strong>2,000 lines</strong> of scrollback. Popup is <strong>60%×30%</strong> with label <em>Open URL</em>. Opens with <code>xdg-open</code> on Linux.</div>
+</section>
+
+<section class="catppuccin">
+  <h2>catppuccin</h2>
+  <div class="note"><span class="tag">theme</span> Status bar pinned to the <strong>top</strong>. Left module: <strong>session name</strong>. Right module: <strong>current directory basename</strong>.</div>
+  <div class="note">Active window label shows a zoom indicator <code>()</code> when the pane is zoomed. Window numbers appear on the right side of each tab.</div>
+  <div class="note">Uses the <strong>omerxx fork</strong> (<code>omerxx/catppuccin-tmux</code>) — includes a calendar/meetings script (currently commented out in conf).</div>
+</section>
+
+<section class="sessionx">
+  <h2>tmux-sessionx</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>o</kbd></td><td class="action">Open SessionX picker (fuzzy, zoxide-powered)</td></tr>
+    <tr><td class="keys"><kbd>Ctrl+y</kbd> <span class="tag">sessionx</span></td><td class="action">Open selected session in a new window instead of switching</td></tr>
+    <tr><td class="keys"><kbd>Ctrl+d</kbd> <span class="tag">sessionx</span></td><td class="action">Delete the selected session</td></tr>
+    <tr><td class="keys"><kbd>Ctrl+r</kbd> <span class="tag">sessionx</span></td><td class="action">Rename the selected session</td></tr>
+    <tr><td class="keys"><kbd>Tab</kbd> <span class="tag">sessionx</span></td><td class="action">Preview windows in the selected session</td></tr>
+  </table>
+  <div class="note">Popup is <strong>75%×85%</strong>. Zoxide mode on — type a directory name to create or jump to a session for that path. Custom path: <code>~/dotfiles</code>. Auto-accept off (press Enter to confirm).</div>
+</section>
+
+<section class="floax">
+  <h2>tmux-floax</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>p</kbd></td><td class="action">Toggle the floating pane open / closed</td></tr>
+  </table>
+  <div class="note">Floating pane is <strong>80%×80%</strong> with a <strong>magenta</strong> border and blue text. <code>change-path true</code> — the floating pane inherits the current pane's working directory each time it opens.</div>
 </section>
 
 <section class="gotchas">
   <h2>Gotchas</h2>
   <div class="note"><span class="warn">⚠</span> <kbd class="prefix">⌃`</kbd> <kbd>c</kbd> <strong>kills the pane</strong> — use <kbd>Ctrl+c</kbd> for a new window.</div>
   <div class="note"><strong>escape-time 0</strong> — no Esc delay (good for vim).</div>
-  <div class="note">SessionX custom path still points to <code>/Users/omerxx/dotfiles</code> — leftover from the upstream config.</div>
+  <div class="note">SessionX custom path is set to <code>~/dotfiles</code> (<code>@sessionx-custom-paths-subdirectories false</code>).</div>
 </section>
 
 </main>
