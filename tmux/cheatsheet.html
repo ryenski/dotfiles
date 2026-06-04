@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tmux Cheat Sheet</title>
+<style>
+  /* Catppuccin Mocha palette — matches the tmux theme */
+  :root {
+    --base: #1e1e2e;
+    --mantle: #181825;
+    --crust: #11111b;
+    --surface0: #313244;
+    --surface1: #45475a;
+    --text: #cdd6f4;
+    --subtext: #a6adc8;
+    --overlay: #6c7086;
+    --magenta: #cba6f7;
+    --pink: #f5c2e7;
+    --blue: #89b4fa;
+    --green: #a6e3a1;
+    --yellow: #f9e2af;
+    --red: #f38ba8;
+    --peach: #fab387;
+    --teal: #94e2d5;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--crust);
+    color: var(--text);
+    font-family: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  header {
+    background: var(--mantle);
+    border-bottom: 1px solid var(--surface0);
+    padding: 2rem 2rem 1.5rem;
+    text-align: center;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--magenta);
+    letter-spacing: 0.05em;
+  }
+  header p { margin: 0.5rem 0 0; color: var(--subtext); }
+  .prefix-banner {
+    display: inline-block;
+    margin-top: 1rem;
+    background: var(--surface0);
+    border: 1px solid var(--magenta);
+    border-radius: 8px;
+    padding: 0.5rem 1.25rem;
+    color: var(--yellow);
+  }
+  .prefix-banner kbd { font-size: 1.05em; }
+  main {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1.25rem;
+    align-items: start;
+  }
+  section {
+    background: var(--base);
+    border: 1px solid var(--surface0);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  section h2 {
+    margin: 0;
+    padding: 0.65rem 1rem;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: var(--mantle);
+    border-bottom: 1px solid var(--surface0);
+  }
+  section.sessions h2 { color: var(--blue); }
+  section.windows h2  { color: var(--green); }
+  section.panes h2    { color: var(--magenta); }
+  section.copy h2     { color: var(--yellow); }
+  section.grab h2     { color: var(--teal); }
+  section.misc h2     { color: var(--peach); }
+  section.plugins h2  { color: var(--pink); }
+  section.gotchas h2  { color: var(--red); }
+  table { width: 100%; border-collapse: collapse; }
+  td {
+    padding: 0.45rem 1rem;
+    border-bottom: 1px solid var(--surface0);
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+  td.keys { white-space: nowrap; width: 1%; }
+  td.action { color: var(--subtext); }
+  kbd {
+    display: inline-block;
+    background: var(--surface0);
+    border: 1px solid var(--surface1);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    padding: 0.1em 0.45em;
+    font-family: inherit;
+    font-size: 0.9em;
+    color: var(--text);
+  }
+  kbd.prefix { color: var(--magenta); border-color: var(--magenta); }
+  .note {
+    padding: 0.6rem 1rem;
+    color: var(--subtext);
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--surface0);
+  }
+  .note:last-child { border-bottom: none; }
+  .note strong { color: var(--text); }
+  .warn { color: var(--red); }
+  .tag {
+    color: var(--overlay);
+    font-size: 0.8em;
+  }
+  footer {
+    text-align: center;
+    color: var(--overlay);
+    padding: 1.5rem;
+    font-size: 0.8rem;
+  }
+  footer code { color: var(--subtext); }
+  @media print {
+    body { background: #fff; color: #000; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⌨ Tmux Cheat Sheet</h1>
+  <p>~/dotfiles/tmux &nbsp;·&nbsp; Catppuccin / omerxx-based config</p>
+  <div class="prefix-banner">
+    Prefix = <kbd>Ctrl</kbd> + <kbd>`</kbd> &nbsp;(backtick — not the default Ctrl+b)
+  </div>
+</header>
+
+<main>
+
+<section class="sessions">
+  <h2>Sessions</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>o</kbd></td><td class="action">SessionX — fuzzy session picker (zoxide mode)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>S</kbd></td><td class="action">Choose session (built-in tree)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+d</kbd></td><td class="action">Detach</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>*</kbd></td><td class="action">List clients</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+s</kbd> / <kbd>Ctrl+r</kbd></td><td class="action">Resurrect save / restore <span class="tag">(plugin default)</span></td></tr>
+  </table>
+  <div class="note"><strong>detach-on-destroy off</strong> — closing a session switches to another instead of exiting tmux. Continuum auto-restores on start.</div>
+</section>
+
+<section class="windows">
+  <h2>Windows</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+c</kbd></td><td class="action">New window (starts in $HOME)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>H</kbd> / <kbd>L</kbd></td><td class="action">Previous / next window</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+a</kbd></td><td class="action">Last window (toggle)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>w</kbd></td><td class="action">List windows</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>"</kbd></td><td class="action">Choose window</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>r</kbd></td><td class="action">Rename window</td></tr>
+  </table>
+  <div class="note">Windows indexed from <strong>1</strong>, renumbered automatically on close.</div>
+</section>
+
+<section class="panes">
+  <h2>Panes</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>s</kbd></td><td class="action">Split vertically (below, keeps path)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>v</kbd></td><td class="action">Split horizontally (right, keeps path)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></td><td class="action">Move between panes (vim-style)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>z</kbd></td><td class="action">Toggle pane zoom</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>,</kbd> / <kbd>.</kbd></td><td class="action">Resize 20 cols left / right (repeatable)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>-</kbd> / <kbd>=</kbd></td><td class="action">Resize 7 rows down / up (repeatable)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>x</kbd></td><td class="action">Swap pane down</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>c</kbd></td><td class="action"><span class="warn">⚠ Kill pane</span> (not new window!)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>*</kbd></td><td class="action">Toggle synchronize-panes</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>P</kbd></td><td class="action">Toggle pane border status</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>p</kbd></td><td class="action">Floax floating pane (80% × 80%)</td></tr>
+  </table>
+</section>
+
+<section class="copy">
+  <h2>Copy Mode &amp; Clipboard</h2>
+  <table>
+    <tr><td class="keys"><kbd>v</kbd></td><td class="action">Begin selection (in copy mode)</td></tr>
+    <tr><td class="keys"><kbd>y</kbd></td><td class="action">Yank to system clipboard (tmux-yank)</td></tr>
+  </table>
+  <div class="note"><strong>vi mode-keys</strong> · system clipboard on · history limit <strong>1,000,000</strong> lines.</div>
+</section>
+
+<section class="grab">
+  <h2>URL &amp; Text Grabbing</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>u</kbd></td><td class="action">fzf-url — pick a URL from scrollback &amp; open <span class="tag">(plugin default)</span></td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Space</kbd></td><td class="action">tmux-thumbs — hint-copy on-screen text <span class="tag">(plugin default)</span></td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>F</kbd></td><td class="action">tmux-fzf menu <span class="tag">(plugin default)</span></td></tr>
+  </table>
+</section>
+
+<section class="misc">
+  <h2>Misc</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>R</kbd></td><td class="action">Reload tmux.conf</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>K</kbd></td><td class="action">Clear screen</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+l</kbd></td><td class="action">Refresh client</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>:</kbd></td><td class="action">Command prompt</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+x</kbd></td><td class="action">Lock server</td></tr>
+  </table>
+</section>
+
+<section class="plugins">
+  <h2>Plugins (TPM)</h2>
+  <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>I</kbd> / <kbd>U</kbd></td><td class="action">Install / update plugins</td></tr>
+    <tr><td class="keys">sensible · yank</td><td class="action">Sane defaults · clipboard yank</td></tr>
+    <tr><td class="keys">resurrect · continuum</td><td class="action">Save / auto-restore sessions (nvim strategy)</td></tr>
+    <tr><td class="keys">thumbs · fzf · fzf-url</td><td class="action">Hint copy · fuzzy menus · URL opener</td></tr>
+    <tr><td class="keys">catppuccin</td><td class="action">Theme — status at <strong>top</strong>: session left, directory right</td></tr>
+    <tr><td class="keys">sessionx · floax</td><td class="action">Session manager (<kbd>o</kbd>) · floating pane (<kbd>p</kbd>)</td></tr>
+  </table>
+</section>
+
+<section class="gotchas">
+  <h2>Gotchas</h2>
+  <div class="note"><span class="warn">⚠</span> <kbd class="prefix">⌃`</kbd> <kbd>c</kbd> <strong>kills the pane</strong> — use <kbd>Ctrl+c</kbd> for a new window.</div>
+  <div class="note"><strong>escape-time 0</strong> — no Esc delay (good for vim).</div>
+  <div class="note">SessionX custom path still points to <code>/Users/omerxx/dotfiles</code> — leftover from the upstream config.</div>
+</section>
+
+</main>
+
+<footer>
+  Generated from <code>~/dotfiles/tmux/tmux.conf</code> &amp; <code>tmux.reset.conf</code> · 2026-06-04
+</footer>
+
+</body>
+</html>
