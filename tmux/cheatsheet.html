@@ -297,11 +297,14 @@
 <section class="thumbs">
   <h2>tmux-thumbs</h2>
   <table>
-    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Space</kbd></td><td class="action">Enter thumbs mode — overlays letter hints on all on-screen text tokens</td></tr>
-    <tr><td class="keys"><kbd>a</kbd>–<kbd>z</kbd> <span class="tag">thumbs mode</span></td><td class="action">Press the hint letter to copy that token to the clipboard</td></tr>
-    <tr><td class="keys"><kbd>shift</kbd>+hint <span class="tag">thumbs mode</span></td><td class="action">Copy token and paste it directly into the current pane</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Space</kbd></td><td class="action">Enter thumbs mode — overlays letter hints on matched patterns in the visible pane</td></tr>
+    <tr><td class="keys"><kbd>a</kbd>–<kbd>z</kbd> <span class="tag">thumbs mode</span></td><td class="action">Copy match to the <strong>tmux buffer</strong> (not system clipboard) and exit</td></tr>
+    <tr><td class="keys"><kbd>A</kbd>–<kbd>Z</kbd> <span class="tag">thumbs mode</span></td><td class="action">Copy match to tmux buffer <strong>and paste</strong> it directly into the current pane</td></tr>
+    <tr><td class="keys"><kbd>Space</kbd> <span class="tag">thumbs mode</span></td><td class="action">Enter multi-select — pick multiple hints, then <kbd>Space</kbd> again to paste all space-separated</td></tr>
+    <tr><td class="keys"><kbd>↑</kbd> <kbd>↓</kbd> <span class="tag">thumbs mode</span></td><td class="action">Arrow-navigate between matches instead of typing hint letters</td></tr>
   </table>
-  <div class="note">Great for grabbing hashes, IPs, file paths, and UUIDs without reaching for the mouse.</div>
+  <div class="note"><strong>Matched patterns:</strong> file paths, git SHAs, hex colors, IPv4/IPv6, UUIDs, Docker images, Kubernetes resources, URLs, numbers (4+ digits), and more. Add custom patterns with <code>@thumbs-regexp-N</code>.</div>
+  <div class="note"><span class="warn">⚠</span> Copies to the <strong>tmux buffer</strong> by default, not the system clipboard. Paste with <kbd class="prefix">⌃`</kbd> <kbd>]</kbd> or set <code>@thumbs-osc52 1</code> for OSC52 clipboard passthrough.</div>
 </section>
 
 <section class="fzf">
