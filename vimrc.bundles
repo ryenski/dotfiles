@@ -1,0 +1,75 @@
+if &compatible
+  set nocompatible
+end
+
+" Remove declared plugins
+function! s:UnPlug(plug_name)
+  if has_key(g:plugs, a:plug_name)
+    call remove(g:plugs, a:plug_name)
+  endif
+endfunction
+command!  -nargs=1 UnPlug call s:UnPlug(<args>)
+
+let g:has_async = v:version >= 800 || has('nvim')
+
+call plug#begin('~/.vim/bundle')
+
+" Plug 'christoomey/vim-run-interactive'
+" Plug 'elixir-lang/vim-elixir'
+" Plug 'fatih/vim-go'
+" Plug 'janko-m/vim-test'
+" Plug 'joshdick/onedark.vim'
+" Plug 'pbrisbin/vim-mkdir'
+" Plug 'posva/vim-vue'                    " Vue syntax
+" Plug 'tpope/vim-bundler'
+" Plug 'tpope/vim-cucumber'
+" Plug 'tpope/vim-eunuch'
+" Plug 'tpope/vim-projectionist'
+" Plug 'tpope/vim-rake'
+" Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-rhubarb'
+Plug 'ap/vim-css-color'                 " A very fast, multi-syntax context-sensitive color name highlighter
+Plug 'bogado/file-line'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'dkarter/bullets.vim'              " 🔫 Bullets.vim is a Vim plugin for automated bullet lists. https://doriankarter.com
+Plug 'godlygeek/tabular'                " Line up text
+Plug 'jasoncodes/ctrlp-modified.vim'    " Easily open locally modified files in your git-versioned projects.
+Plug 'markonm/traces.vim'               " Highlight regex matches
+Plug 'pangloss/vim-javascript'
+Plug 'rking/ag.vim'                     " Use the silver searcher
+" Plug 'ryanoasis/vim-devicons'           " Icons in the sidebar
+Plug 'scrooloose/nerdtree'
+Plug 'sheerun/vim-polyglot'             " A collection of language packs for Vim.
+Plug 'slim-template/vim-slim'
+Plug 'thiagoalessio/rainbow_levels.vim' " Highlight code by indentation level
+Plug 'Townk/vim-autoclose'              " Auto close blocks and tags
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-ragtag'                 " A set of mappings for HTML, XML, PHP, ASP, eRuby, JSP, and more (formerly allml)
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-sensible'               " sensible.vim: Defaults everyone can agree on https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-ruby/vim-ruby'
+Plug 'vim-scripts/gitignore'            " Set 'wildignore' from ./.gitignore
+" Plug 'vim-scripts/tComment'
+Plug 'Xuyuanp/nerdtree-git-plugin'      " Git status in nerd tree
+" Plug 'nathangrigg/vim-beancount'
+
+" Plug 'dracula/vim'
+" Plug 'Rigellute/shades-of-purple.vim'
+Plug 'emsilva/shades-of-purple.vim'
+" Plug 'carakan/new-railscasts-theme'
+" Plug 'junegunn/goyo.vim'
+Plug 'github/copilot.vim'
+
+if g:has_async
+  Plug 'dense-analysis/ale'
+endif
+if filereadable(expand("~/.vimrc.bundles.local"))
+  source ~/.vimrc.bundles.local
+endif
+
+call plug#end()
