@@ -1,0 +1,51 @@
+[init]
+	defaultBranch = master
+	templatedir = ~/.git_template
+[push]
+	default = current
+[color]
+	ui = auto
+[alias]
+	aa = add --all
+	ap = add --patch
+	branches = !legit branches
+	ci = commit -v
+	co = checkout
+	pf = push --force-with-lease
+	st = status
+	graft = !legit graft
+	harvest = !legit harvest
+	publish = !legit publish
+	unpublish = !legit unpublish
+	sprout = !legit sprout
+	sync = !legit sync
+	switch = !legit switch
+	resync = !legit resync
+[core]
+  excludesfile = ~/.gitignore
+	autocrlf = input
+	pager = less -F -X
+	editor = nvim
+[merge]
+	ff = only
+[fetch]
+	prune = true
+[rebase]
+	autosquash = true
+[log]
+	decorate = full
+[diff]
+	colorMoved = zebra
+	tool = default-difftool
+[pull]
+	rebase = true
+[commit]
+	gpgsign = true
+[credential "https://github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[gpg]
+	program = /opt/homebrew/bin/gpg
+[include]
+  path = ~/.gitconfig.local
