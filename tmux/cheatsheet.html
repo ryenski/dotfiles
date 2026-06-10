@@ -191,7 +191,9 @@
 <section class="windows">
   <h2>Windows</h2>
   <table>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>n</kbd></td><td class="action">New window</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+c</kbd></td><td class="action">New window (starts in $HOME)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>h</kbd> / <kbd>l</kbd></td><td class="action">Previous / next window</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>H</kbd> / <kbd>L</kbd></td><td class="action">Previous / next window</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>Ctrl+a</kbd></td><td class="action">Last window (toggle)</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>w</kbd></td><td class="action">List windows</td></tr>
@@ -206,12 +208,11 @@
   <table>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>s</kbd></td><td class="action">Split vertically (below, keeps path)</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>v</kbd></td><td class="action">Split horizontally (right, keeps path)</td></tr>
-    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>h</kbd> <kbd>j</kbd> <kbd>k</kbd> <kbd>l</kbd></td><td class="action">Move between panes (vim-style)</td></tr>
+    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>j</kbd> / <kbd>k</kbd></td><td class="action">Move to pane below / above (vim-style)</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>z</kbd></td><td class="action">Toggle pane zoom</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>,</kbd> / <kbd>.</kbd></td><td class="action">Resize 20 cols left / right (repeatable)</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>-</kbd> / <kbd>=</kbd></td><td class="action">Resize 7 rows down / up (repeatable)</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>x</kbd></td><td class="action">Swap pane down</td></tr>
-    <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>c</kbd></td><td class="action"><span class="warn">⚠ Kill pane</span> (not new window!)</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>*</kbd></td><td class="action">Toggle synchronize-panes</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>P</kbd></td><td class="action">Toggle pane border status</td></tr>
     <tr><td class="keys"><kbd class="prefix">⌃`</kbd> <kbd>p</kbd></td><td class="action">Floax floating pane (80% × 80%)</td></tr>
@@ -352,7 +353,7 @@
 
 <section class="gotchas">
   <h2>Gotchas</h2>
-  <div class="note"><span class="warn">⚠</span> <kbd class="prefix">⌃`</kbd> <kbd>c</kbd> <strong>kills the pane</strong> — use <kbd>Ctrl+c</kbd> for a new window.</div>
+  <div class="note"><kbd class="prefix">⌃`</kbd> <kbd>h</kbd> / <kbd>l</kbd> switch <strong>windows</strong> (prev/next), not panes — only <kbd>j</kbd> / <kbd>k</kbd> move between panes.</div>
   <div class="note"><strong>escape-time 0</strong> — no Esc delay (good for vim).</div>
   <div class="note">SessionX custom path is set to <code>~/dotfiles</code> (<code>@sessionx-custom-paths-subdirectories false</code>).</div>
 </section>
@@ -360,7 +361,7 @@
 </main>
 
 <footer>
-  Generated from <code>~/dotfiles/tmux/tmux.conf</code> &amp; <code>tmux.reset.conf</code> · 2026-06-04
+  Generated from <code>~/dotfiles/tmux/tmux.conf</code> &amp; <code>tmux.reset.conf</code> · 2026-06-10
 </footer>
 
 </body>
